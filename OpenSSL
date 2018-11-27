@@ -22,3 +22,7 @@ openssl x509 -in client1.crt -text -noout
 
 openssl x509 -noout -modulus -in client1 | openssl md5
 openssl rsa -noout -modulus -in client1 | openssl md5
+
+NOTES:
+- Sometimes, '.pem' files need to be changed to '.crt' extension to be recognised Windows systems
+- OpenSSL can convert certs and keys from binary to text base64 formats such as '.pem'.
