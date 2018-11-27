@@ -1,0 +1,24 @@
+#  Generate a CA private key and certificate
+
+openssl req -x509 -new -nodes -key ca-key.pem -sha256 -days 1825 -out ca-cert.pem
+
+#  Generate new key
+
+openssl genrsa -out client1 2048
+
+#  Generate new csr from key
+
+openssl req -new -key client1 -out client1.csr
+
+#  Sign the key using the CA
+
+openssl x509 -req -in client1.csr -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out client1.crt -days 1825 -sha256
+
+#  View a cert
+
+openssl x509 -in client1.crt -text -noout
+
+#  Verify cert and key (compare outputs)
+
+openssl x509 -noout -modulus -in client1 | openssl md5
+openssl rsa -noout -modulus -in client1 | openssl md5
