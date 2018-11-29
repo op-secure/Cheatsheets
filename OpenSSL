@@ -1,14 +1,14 @@
 #  Generate CA private key
 
-openssl genrsa -out ca.key 2048
+    openssl genrsa -out ca.key 2048
 
 #  Generate CA cert
 
-openssl req -x509 -new -nodes -key ca.key -sha256 -days 1825 -out ca.crt
+    openssl req -x509 -new -nodes -key ca.key -sha256 -days 1825 -out ca.crt
 
 #  Generate new server key
 
-openssl genrsa -out server1 2048
+    openssl genrsa -out server1 2048
 
 #  For serverAuth set the following config file (eg: servercert1.conf)
 
@@ -40,11 +40,11 @@ openssl genrsa -out server1 2048
 
 #  Generate new csr from key
 
-openssl req -sha512 -new -key server1 -out server1.csr -config servercert1.conf
+    openssl req -sha512 -new -key server1 -out server1.csr -config servercert1.conf
 
 #  Sign the key using the CA cert to generate a server cert
 
-openssl x509 -req -in server1.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server1.crt -days 1825 -sha512 -extensions v3_req -extfile servercert1.conf
+    openssl x509 -req -in server1.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server1.crt -days 1825 -sha512 -extensions v3_req -extfile servercert1.conf
 
 #  For clientAuth set the following config file (eg: clientcert1.conf)
 
@@ -79,26 +79,26 @@ openssl x509 -req -in server1.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out 
 
 # Generate a client key
 
-openssl genrsa -out client1.key 2048
+    openssl genrsa -out client1.key 2048
 
 # Generate CSR for client key
 
-openssl req -sha512 -new -key client1.key -out client1.csr -config clientcert1.conf 
+    openssl req -sha512 -new -key client1.key -out client1.csr -config clientcert1.conf 
 
 # Sign the client key using the CA cert
 
-openssl x509 -req -in client1.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out client1.crt -days 1825 -sha512 -extensions v3_req -extfile clientcert1.conf
+    openssl x509 -req -in client1.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out client1.crt -days 1825 -sha512 -extensions v3_req -extfile clientcert1.conf
 
 #  View a cert
 
-openssl x509 -in client1.crt -text -noout
+    openssl x509 -in client1.crt -text -noout
 
 #  Verify cert and key (compare outputs)
 
-openssl x509 -noout -modulus -in client1 | openssl md5
-openssl rsa -noout -modulus -in client1 | openssl md5
+    openssl x509 -noout -modulus -in client1 | openssl md5
+    openssl rsa -noout -modulus -in client1 | openssl md5
 
 
 NOTES:
-- Sometimes, '.pem' files need to be changed to '.crt' extension to be recognised Windows systems
-- OpenSSL can convert certs and keys from binary to text base64 formats such as '.pem'.
+    - Sometimes, '.pem' files need to be changed to '.crt' extension to be recognised Windows systems
+    - OpenSSL can convert certs and keys from binary to text base64 formats such as '.pem'.
