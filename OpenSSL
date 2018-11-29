@@ -67,7 +67,7 @@ openssl x509 -req -in server1.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out 
     # Extensions for server certificates (`man x509v3_config`).
     basicConstraints = CA:FALSE
     nsCertType = client, server
-    nsComment = "OpenSSL FileBeat Server / Client Certificate"
+    nsComment = "OpenSSL Client Certificate"
     subjectKeyIdentifier = hash
     authorityKeyIdentifier = keyid,issuer:always
     keyUsage = critical, digitalSignature, keyEncipherment, keyAgreement, nonRepudiation
