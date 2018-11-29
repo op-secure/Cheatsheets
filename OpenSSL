@@ -1,16 +1,18 @@
-#  Generate CA private key
+OpenSSL Certificates Cheatsheet
+
+# Generate CA private key
 
     openssl genrsa -out ca.key 2048
 
-#  Generate CA cert
+# Generate CA cert
 
     openssl req -x509 -new -nodes -key ca.key -sha256 -days 1825 -out ca.crt
 
-#  Generate new server key
+# Generate new server key
 
     openssl genrsa -out server1 2048
 
-#  For serverAuth set the following config file (eg: servercert1.conf)
+# For serverAuth set the following config file (eg: servercert1.conf)
 
     [req]
     distinguished_name = req_distinguished_name
@@ -38,15 +40,15 @@
     DNS.3 = DOMAIN_3
     DNS.4 = DOMAIN_4
 
-#  Generate new csr from key
+# Generate new csr from key
 
     openssl req -sha512 -new -key server1 -out server1.csr -config servercert1.conf
 
-#  Sign the key using the CA cert to generate a server cert
+# Sign the key using the CA cert to generate a server cert
 
     openssl x509 -req -in server1.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server1.crt -days 1825 -sha512 -extensions v3_req -extfile servercert1.conf
 
-#  For clientAuth set the following config file (eg: clientcert1.conf)
+# For clientAuth set the following config file (eg: clientcert1.conf)
 
     [req]
     distinguished_name = req_distinguished_name
@@ -89,11 +91,11 @@
 
     openssl x509 -req -in client1.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out client1.crt -days 1825 -sha512 -extensions v3_req -extfile clientcert1.conf
 
-#  View a cert
+# View a cert
 
     openssl x509 -in client1.crt -text -noout
 
-#  Verify cert and key (compare outputs)
+# Verify cert and key (compare outputs)
 
     openssl x509 -noout -modulus -in client1 | openssl md5
     openssl rsa -noout -modulus -in client1 | openssl md5
